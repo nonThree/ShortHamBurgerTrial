@@ -1,34 +1,72 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BurgerComponentsDrop : MonoBehaviour
 {
+    public BurgerDetection burgerDetection;
+
     [Header("Burger Components")]
     public GameObject[] BurgerComponents;
-    public Transform spawnPos;
+    public Transform[] spawnPos;
+    public Transform target;
+
+    public Text text;
 
     public int recentComponent;
+
+    public float t;
 
     public float timeRemaining;
 
     private void Start()
     {
-
+        recentComponent = 5;
     }
 
     private void Update()
     {
-        SpawnSpecific();
+        DisplayComponents();
+
         Timer();
+    }
+    private void FixedUpdate()
+    {
+        MovingSpawner();
+    }
+
+    private void DisplayComponents()
+    {
+        switch(recentComponent+1)
+        {
+            case 0:
+                text.text = "Top bun";
+                    break;
+            case 1:
+                text.text = "Cheese";
+                break;
+            case 2:
+                text.text = "Bacon";
+                break;
+            case 3:
+                text.text = "Tomato";
+                break;
+            case 4:
+                text.text = "Lettuce";
+                break;
+            case 5:
+                text.text = "Bottom bun";
+                break;
+        }
     }
 
     private void Timer()
     {
         if(timeRemaining < 0)
         {
-            timeRemaining = .8f;
-            //SpawnRandom();
+            timeRemaining = 5f;
+            TutorialDrop();
         }
         else
         {
@@ -36,34 +74,50 @@ public class BurgerComponentsDrop : MonoBehaviour
         }
     }
 
-    private void SpawnSpecific()
+    private void TutorialDrop()
     {
-        if(Input.GetMouseButtonDown(0))
+        Instantiate(BurgerComponents[recentComponent], transform.position, transform.rotation);
+       if(!burgerDetection.bottomBun)
         {
-            Instantiate(BurgerComponents[recentComponent], spawnPos.position, spawnPos.rotation);
-            recentComponent--;
+            recentComponent = 5;
         }
+       else if(!burgerDetection.lettuce)
+        {
+            recentComponent = 4;
+        }
+       else if(!burgerDetection.tomato)
+        {
+            recentComponent = 3;
+        }
+       else if(!burgerDetection.bacon)
+        {
+            recentComponent = 2;
+        }
+       else if(!burgerDetection.cheese)
+        {
+            recentComponent = 1;
+        }
+        else
+        {
+            recentComponent = 0;
+        }
+        
     }
 
-    private void SpawnRandom()
+    private void MovingSpawner()
     {
-        int randomComponent = Random.Range(0, BurgerComponents.Length);
-        if(randomComponent == recentComponent)
+        Vector3 a = transform.position;
+        Vector3 b = target.position;
+
+        if (Vector3.Distance(transform.position, target.position) < 0.2f)
         {
+            target.position = new Vector3(Random.Range(-4,4), b.y , Random.Range(-7.5f,7.5f));
 
-            switch(randomComponent)
-            {
-                case 5:
-                    randomComponent = 0;
-                    break;
-                default:
-                    randomComponent++;
-                    break;
-            }
         }
-        recentComponent = randomComponent;
-        Instantiate(BurgerComponents[randomComponent], spawnPos.position, spawnPos.rotation);
+        else
+        {
+            transform.position = Vector3.MoveTowards(a, b, 0.1f);
+        }
     }
-
     
 }

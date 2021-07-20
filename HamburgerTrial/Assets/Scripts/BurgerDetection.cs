@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BurgerDetection : MonoBehaviour
 {
+    public LoadNextScene loadNextScene;
+
     //Check for top to bottom
     [Header("Win Conditions")]
     public bool bottomBun = false;
@@ -28,6 +30,11 @@ public class BurgerDetection : MonoBehaviour
     private void Update()
     {
         CheckWinConditions();
+
+        if(GameWin == true)
+        {
+            loadNextScene.LoadNext();
+        }
     }
 
     private void CheckWinConditions()
