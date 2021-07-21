@@ -17,6 +17,14 @@ public class BurgerDetection : MonoBehaviour
 
     public bool GameWin;
 
+    [Header("Win Condition Indicators")]
+    public GameObject bottombunTick;
+    public GameObject lettuceTick;
+    public GameObject tomatoTick;
+    public GameObject baconTick;
+    public GameObject cheeseTick;
+    public GameObject topbunTick;
+
     private void Start()
     {
         bottomBun = false;
@@ -30,6 +38,8 @@ public class BurgerDetection : MonoBehaviour
     private void Update()
     {
         CheckWinConditions();
+
+        DisplayWinConditions();
 
         if(GameWin == true)
         {
@@ -45,6 +55,63 @@ public class BurgerDetection : MonoBehaviour
             {
                 GameWin = true;
             }
+        }
+    }
+
+    private void DisplayWinConditions()
+    {
+        if(bottomBun)
+        {
+            bottombunTick.SetActive(true);
+        }
+        else
+        {
+            bottombunTick.SetActive(false);
+        }
+        
+        if(lettuce)
+        {
+            lettuceTick.SetActive(true);
+        }
+        else
+        {
+            lettuceTick.SetActive(false);
+        }
+
+        if(tomato)
+        {
+            tomatoTick.SetActive(true);
+        }
+        else
+        {
+            tomatoTick.SetActive(false);
+        }
+
+        if(bacon)
+        {
+            baconTick.SetActive(true);
+        }
+        else
+        {
+            baconTick.SetActive(false);
+        }
+
+        if(cheese)
+        {
+            cheeseTick.SetActive(true);
+        }
+        else
+        {
+            cheeseTick.SetActive(false);
+        }
+
+        if(topBun)
+        {
+            topbunTick.SetActive(true);
+        }
+        else
+        {
+            topbunTick.SetActive(false);
         }
     }
 }

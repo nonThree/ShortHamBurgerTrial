@@ -27,38 +27,11 @@ public class BurgerComponentsDrop : MonoBehaviour
 
     private void Update()
     {
-        DisplayComponents();
-
         Timer();
     }
     private void FixedUpdate()
     {
         MovingSpawner();
-    }
-
-    private void DisplayComponents()
-    {
-        switch(recentComponent+1)
-        {
-            case 0:
-                text.text = "Top bun";
-                    break;
-            case 1:
-                text.text = "Cheese";
-                break;
-            case 2:
-                text.text = "Bacon";
-                break;
-            case 3:
-                text.text = "Tomato";
-                break;
-            case 4:
-                text.text = "Lettuce";
-                break;
-            case 5:
-                text.text = "Bottom bun";
-                break;
-        }
     }
 
     private void Timer()
@@ -80,26 +53,32 @@ public class BurgerComponentsDrop : MonoBehaviour
        if(!burgerDetection.bottomBun)
         {
             recentComponent = 5;
+            text.text = "Bottom Bun";
         }
        else if(!burgerDetection.lettuce)
         {
             recentComponent = 4;
+            text.text = "Lettuce";
         }
        else if(!burgerDetection.tomato)
         {
             recentComponent = 3;
+            text.text = "Tomato";
         }
        else if(!burgerDetection.bacon)
         {
             recentComponent = 2;
+            text.text = "Bacon";
         }
        else if(!burgerDetection.cheese)
         {
             recentComponent = 1;
+            text.text = "Cheese";
         }
         else
         {
             recentComponent = 0;
+            text.text = "Top Bun";
         }
         
     }
